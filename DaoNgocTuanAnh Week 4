@@ -1,0 +1,162 @@
+"""
+Bài tập 01: Indexing & Slicing chuỗi
+Mục tiêu: Thành thạo truy cập và cắt chuỗi
+"""
+
+# TODO 1
+s = "Python Journey"
+
+print("Ký tự đầu:", s[0])
+print("Ký tự cuối:", s[-1])
+print("5 ký tự đầu:", s[:5])
+
+
+# TODO 2
+print("a) Lấy Journey:", s[7:])
+print("b) Đảo ngược:", s[::-1])
+print("c) Mỗi ký tự thứ 2:", s[::2])
+
+
+# TODO 3
+cccd = input("\nNhập CCCD (12 chữ số): ")
+
+print("Mã tỉnh:", cccd[:2])
+print("Giới tính:", cccd[2])
+print("Năm sinh:", cccd[3:6])
+
+
+# TODO 4
+chuoi = input("\nNhập chuỗi: ")
+
+if chuoi == chuoi[::-1]:
+    print("True - Chuỗi đối xứng")
+else:
+    print("False - Không đối xứng")
+  """
+Bài tập 02: Phương thức chuỗi
+Mục tiêu: Dùng thành thạo các string methods
+"""
+
+# TODO 1: Chuẩn hóa email
+email = "  User@Example.COM  "
+email = email.strip().lower()
+print("Email:", email)
+
+
+# TODO 2: Xử lý sentence
+sentence = "hello world python programming"
+
+# a) Title Case
+print("Title Case:", sentence.title())
+
+# b) Đếm chữ o
+print("Số lần chữ o:", sentence.count("o"))
+
+# c) Thay python thành PYTHON
+print("Thay thế:", sentence.replace("python", "PYTHON"))
+
+
+# TODO 3: Tách họ và tên
+ho_ten = input("\nNhập họ tên đầy đủ: ").strip()
+parts = ho_ten.split()
+
+print("Họ:", parts[0])
+print("Tên:", parts[-1])
+
+
+# TODO 4: Kiểm tra tên file
+ten_file = input("\nNhập tên file: ")
+
+if ten_file.endswith((".py", ".txt", ".csv")):
+    print("Tên file hợp lệ")
+else:
+    print("Tên file không hợp lệ")
+
+
+# TODO 5: Mã hóa Caesar
+chuoi = input("\nNhập chuỗi: ")
+shift = int(input("Nhập số bước dịch: "))
+
+ket_qua = ""
+
+for c in chuoi:
+    if c.isalpha():
+        if c.islower():
+            ket_qua += chr((ord(c) - ord('a') + shift) % 26 + ord('a'))
+        else:
+            ket_qua += chr((ord(c) - ord('A') + shift) % 26 + ord('A'))
+    else:
+        ket_qua += c
+
+print("Chuỗi sau mã hóa:", ket_qua)
+  """
+Bài tập 03: f-string formatting
+Mục tiêu: Định dạng output đẹp với f-string
+"""
+
+# TODO 1
+ten = "An"
+tuoi = 20
+diem = 8.567
+
+print(f"Học sinh {ten}, {tuoi} tuổi, điểm TB: {diem:.2f}")
+
+
+# TODO 2: Bảng cửu chương 5
+for i in range(1, 11):
+    print(f"5 x {i:>2} = {5 * i:>3}")
+
+
+# TODO 3: Hóa đơn mua hàng
+print("\n===========================")
+print(f"{'SẢN PHẨM':<20}{'GIÁ (VNĐ)':>10}")
+print("---------------------------")
+
+san_pham = [
+    ("Cà phê", 35000),
+    ("Bánh mì", 25000),
+    ("Nước suối", 10000)
+]
+
+tong = 0
+
+for ten_sp, gia in san_pham:
+    print(f"{ten_sp:<20}{gia:>10,}")
+    tong += gia
+
+print("---------------------------")
+print(f"{'TỔNG CỘNG':<20}{tong:>10,}")
+print("===========================")
+
+
+# TODO 4: Progress bar
+phan_tram = int(input("\nNhập phần trăm (0-100): "))
+
+so_o_day = phan_tram // 5
+so_o_trong = 20 - so_o_day
+
+bar = "█" * so_o_day + "░" * so_o_trong
+
+print(f"[{bar}] {phan_tram}%")
+  """Exercise 04: a small regular-expression lab."""
+
+import re
+
+text = "Tickets PJ-101 and PJ-205 are open; XX-999 is unrelated."
+
+# TODO 1: Lấy các mã PJ-xxx
+codes = re.findall(r"PJ-\d{3}", text)
+
+# TODO 2: Tìm chuỗi số đầu tiên
+first_number = re.search(r"\d+", text)
+
+if first_number:
+    first_number = first_number.group()
+
+# TODO 3: Kiểm tra W + đúng 2 chữ số
+candidate = "W04"
+is_week_code = bool(re.fullmatch(r"W\d{2}", candidate))
+
+print(codes)
+print(first_number)
+print(is_week_code)
