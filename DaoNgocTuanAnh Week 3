@@ -1,0 +1,161 @@
+"""
+Bài tập 01: if/elif/else cơ bản
+Mục tiêu: Viết câu lệnh điều kiện đúng cú pháp
+"""
+
+# TODO 1: Nhập tuổi, in ra nhóm tuổi
+tuoi = int(input("Nhập tuổi: "))
+if tuoi < 13:
+    print("Thiếu nhi")
+elif tuoi <= 17:
+    print("Thiếu niên")
+elif tuoi <= 64:
+    print("Người lớn")
+else:
+    print("Người cao tuổi")
+# TODO 2: Nhập điểm, xếp loại
+diem = float(input("Nhập điểm (0-10): "))
+
+if diem >= 9:
+    print("Xuất sắc")
+elif diem >= 8:
+    print("Giỏi")
+elif diem >= 6.5:
+    print("Khá")
+elif diem >= 5:
+    print("Trung bình")
+else:
+    print("Yếu")
+
+# TODO 3: Kiểm tra năm nhuận
+nam = int(input("Nhập năm: "))
+
+if nam % 400 == 0 or (nam % 4 == 0 and nam % 100 != 0):
+    print("Năm nhuận")
+else:
+    print("Không phải năm nhuận")
+
+# TODO 4: Nhập 3 số, tìm số lớn nhất
+a = float(input("Nhập số a: "))
+b = float(input("Nhập số b: "))
+c = float(input("Nhập số c: "))
+if a >= b and a >= c:
+    print("Số lớn nhất là:", a)
+elif b >= a and b >= c:
+    print("Số lớn nhất là:", b)
+else:
+    print("Số lớn nhất là:", c)
+"""
+Bài tập 02: Toán tử logic
+Mục tiêu: Kết hợp and, or, not trong điều kiện
+"""
+
+# TODO 1: Kiểm tra đủ điều kiện lái xe
+tuoi = int(input("Tuổi: "))
+co_bang_lai = input("Có bằng lái? (y/n): ").lower() == "y"
+khong_say = input("Tỉnh táo? (y/n): ").lower() == "y"
+
+if tuoi >= 18 and co_bang_lai and khong_say:
+    print("Đủ điều kiện lái xe")
+else:
+    print("Chưa đủ điều kiện lái xe")
+
+
+# TODO 2: Phân loại tam giác
+a = float(input("\nNhập cạnh a: "))
+b = float(input("Nhập cạnh b: "))
+c = float(input("Nhập cạnh c: "))
+
+if a + b > c and a + c > b and b + c > a:
+    if a == b == c:
+        print("Tam giác đều")
+    elif a == b or a == c or b == c:
+        print("Tam giác cân")
+    else:
+        print("Tam giác thường")
+else:
+    print("Không tạo thành tam giác")
+
+
+# TODO 3: Kiểm tra mật khẩu mạnh
+pw = input("\nNhập mật khẩu: ")
+
+co_chu_hoa = any(c.isupper() for c in pw)
+co_chu_thuong = any(c.islower() for c in pw)
+co_so = any(c.isdigit() for c in pw)
+
+if len(pw) >= 8 and co_chu_hoa and co_chu_thuong and co_so:
+    print("Mật khẩu mạnh")
+else:
+    print("Mật khẩu chưa đủ mạnh")
+
+
+# TODO 4: FizzBuzz
+n = int(input("\nNhập số n: "))
+
+if n % 3 == 0 and n % 5 == 0:
+    print("FizzBuzz")
+elif n % 3 == 0:
+    print("Fizz")
+elif n % 5 == 0:
+    print("Buzz")
+else:
+    print(n)
+"""
+Bài tập 03: Điều kiện lồng nhau
+Mục tiêu: Xử lý logic phức tạp với if lồng nhau
+"""
+
+# TODO 1: ATM rút tiền
+so_du = int(input("Nhập số dư hiện tại: "))
+so_tien = int(input("Nhập số tiền muốn rút: "))
+
+if so_tien <= 0:
+    print("Số tiền rút phải lớn hơn 0")
+else:
+    if so_tien > so_du:
+        print("Số dư không đủ")
+    elif so_tien % 50000 != 0:
+        print("Số tiền phải là bội số của 50,000")
+    else:
+        so_du -= so_tien
+        print("Rút tiền thành công")
+        print("Số dư còn lại:", so_du)
+
+
+# TODO 2: Xếp loại BMI
+chieu_cao = float(input("\nNhập chiều cao (m): "))
+can_nang = float(input("Nhập cân nặng (kg): "))
+
+bmi = can_nang / (chieu_cao ** 2)
+print("BMI của bạn:", round(bmi, 2))
+
+if bmi < 18.5:
+    print("Thiếu cân - Hãy ăn uống đầy đủ và chăm sóc sức khỏe")
+elif bmi < 25:
+    print("Bình thường - Hãy duy trì lối sống lành mạnh")
+elif bmi < 30:
+    print("Thừa cân - Nên chú ý chế độ ăn uống và vận động")
+else:
+    print("Béo phì - Nên tham khảo ý kiến bác sĩ")
+
+
+# TODO 3: Máy bán vé xem phim
+loai_ve = input("\nLoại vé (thuong/vip): ").lower()
+ngay = input("Ngày (thuong/cuoi_tuan): ").lower()
+tuoi = int(input("Tuổi: "))
+
+if loai_ve == "thuong":
+    gia = 80000
+else:
+    gia = 120000
+
+if ngay == "cuoi_tuan":
+    gia *= 1.3
+
+if tuoi < 12 or tuoi >= 65:
+    gia *= 0.5
+elif 18 <= tuoi <= 25:
+    gia *= 0.8
+
+print("Giá vé cuối cùng:", int(gia), "VNĐ")
