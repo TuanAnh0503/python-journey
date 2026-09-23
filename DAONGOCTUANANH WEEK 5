@@ -1,0 +1,79 @@
+"""Exercise 01: list create, read, update and delete."""
+
+subjects = ["Toán", "Văn", "Anh"]
+
+# TODO: append one subject and insert another at index 1.
+# Hàm hỗ trợ in phần tử đầu, phần tử cuối và phần giữa (middle slice)
+def print_elements(lst):
+    if not lst:
+        print("Danh sách rỗng!")
+        return
+    
+    first = lst[0]
+    last = lst[-1]
+    # Lấy các phần tử ở giữa (bỏ phần tử đầu và cuối)
+    middle = lst[1:-1]
+    
+    print(f"Danh sách hiện tại: {lst}")
+    print(f"- Đầu: {first}")
+    print(f"- Cuối: {last}")
+    print(f"- Phần giữa: {middle}")
+    print("-" * 30)
+
+print("--- Trạng thái ban đầu ---")
+print_elements(subjects)
+# TODO: update the first subject.
+subjects.append("Ly")
+subjects.insert("Su")
+print('Su',subjects.insert,'Ly',subjects.append)
+print_elements(subjects)
+# TODO: remove one known subject and pop the last subject.
+if 'Văn' in subjects:   
+    subjects.remove('Văn')
+print("Sau khi go mon Văn")
+print_elements(subjects)
+# TODO: print the first, last and middle slice after each safe operation.
+if subjects:  
+    popped_item = subjects.pop()
+    print(f"--- Sau khi pop môn cuối ('{popped_item}') ---")
+    print_elements(subjects)
+
+
+print(subjects)
+==Phan 2==
+"""Exercise 02: slicing, mutability, alias and copy."""
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+# TODO: create first_three and last_three using slices.
+first_three: list[int] = []
+last_three: list[int] = []
+
+# TODO: make alias refer to numbers and copied be a shallow copy.
+alias: list[int] = []
+copied: list[int] = []
+
+# TODO: append through alias and explain which lists change.
+print(first_three, last_three, alias, copied)
+print(f"first_three: {first_three}")
+print(f"last_three:  {last_three}")
+print(f"alias:       {alias}")
+print(f"copied:      {copied}")
+print(f"numbers:     {numbers}")
+==Phan 3==
+"""Exercise 03: tuple, packing and unpacking."""
+
+coordinate = (3, 7)
+
+# TODO: unpack coordinate into x and y.
+x = 0
+y = 0
+profile:int
+# TODO: pack name, age and topic into one profile tuple, then unpack it.
+profile: tuple[str, int, str] = ("", 0, "")
+
+# TODO: swap left and right using unpacking.
+left = "A"
+right = "B"
+
+print(x, y, profile, left, right)
