@@ -41,8 +41,10 @@ Dữ liệu được tạo ở `data/bank_data.json` sau giao dịch lưu đầu
 ## Test
 
 ```bash
-python -m pytest -q
+python -m pytest -q tests
 ```
+
+Chạy lệnh trên khi terminal đang ở thư mục `projects/bank-management-capstone`. Từ root repository, dùng `python -m pytest -q projects/bank-management-capstone/tests` để chỉ chạy bộ test này.
 
 Bộ test bao gồm tạo tài khoản, nạp tiền, rút vượt số dư, số tiền bằng 0/âm, chuyển tiền, tài khoản không tồn tại, file chưa có, JSON hợp lệ và dữ liệu JSON hỏng/sai cấu trúc.
 
