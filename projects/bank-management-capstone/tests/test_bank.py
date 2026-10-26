@@ -87,3 +87,43 @@ def test_storage_rejects_unexpected_json_shape(tmp_path) -> None:
     path.write_text(json.dumps(["unexpected"]), encoding="utf-8")
     with pytest.raises(StorageError, match="object"):
         JsonBankStorage(path).load()
+
+
+def test_service_rejects_malformed_account_record() -> None:
+    with pytest.raises(BankError, match="thiếu trường"):
+        BankService({"accounts": [{"id": "0001"}]})
+
+
+def test_service_rejects_malformed_transaction_record() -> None:
+    with pytest.raises(BankError, match="thiếu trường"):
+        BankService({
+            "accounts": [{"id": "0001", "name": "An", "balance": 0}],
+            "transactions": [{"account_id": "0001", "amount": 10}],
+        })
+
+
+def test_service_rejects_transaction_for_unknown_account() -> None:
+    with pytest.raises(BankError, match="lịch sử giao dịch"):
+        BankService({
+            "accounts": [{"id": "0001", "name": "An", "balance": 0}],
+            "transactions": [{
+                "account_id": "9999",
+                "type": "NẠP TIỀN",
+                "amount": 10,
+                "note": "test",
+                "timestamp": "2026-10-26T00:00:00+00:00",
+            }],
+        })
+
+
+def test_storage_rejects_invalid_utf8(tmp_path) -> None:
+    path = tmp_path / "bank.json"
+    path.write_bytes(b"\xff\xfe")
+    with pytest.raises(StorageError, match="không đọc được"):
+        JsonBankStorage(path).load()
+
+
+def test_boolean_is_not_accepted_as_money() -> None:
+    bank = make_bank()
+    with pytest.raises(BankError, match="số nguyên dương"):
+        bank.deposit("0001", True)
