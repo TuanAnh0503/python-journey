@@ -12,7 +12,7 @@
 
 ## Tôi đã kiểm chứng câu trả lời của AI như thế nào?
 
-- Chạy `python -m pytest -q` và readiness checker; điền kết quả thực tế sau khi chạy.
+- Chạy `python -m pytest -q tests` và readiness checker; điền kết quả thực tế sau khi chạy.
 - Thử các trường hợp số tiền âm/0, số dư không đủ, tài khoản không tồn tại, file dữ liệu chưa tồn tại và JSON bị hỏng.
 - Đối chiếu số dư trước/sau khi chuyển tiền và kiểm tra lịch sử của cả hai tài khoản.
 
