@@ -20,23 +20,23 @@ class JsonBankStorage:
             return {"accounts": [], "transactions": []}
         try:
             data = json.loads(self.path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError) as exc:
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise StorageError(f"File JSON không đọc được: {exc}") from exc
         if not isinstance(data, dict):
             raise StorageError("Dữ liệu gốc phải là một JSON object.")
-        if not isinstance(data.get("accounts", []), list) or not isinstance(data.get("transactions", []), list):
+        accounts = data.get("accounts", [])
+        transactions = data.get("transactions", [])
+        if not isinstance(accounts, list) or not isinstance(transactions, list):
             raise StorageError("'accounts' và 'transactions' phải là danh sách.")
-        return {"accounts": data.get("accounts", []), "transactions": data.get("transactions", [])}
+        return {"accounts": accounts, "transactions": transactions}
 
     def save(self, data: dict[str, Any]) -> None:
         """Write to a temporary file first to reduce the risk of partial data."""
         try:
+            serialized = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
             self.path.parent.mkdir(parents=True, exist_ok=True)
             temporary_path = self.path.with_suffix(self.path.suffix + ".tmp")
-            temporary_path.write_text(
-                json.dumps(data, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
+            temporary_path.write_text(serialized, encoding="utf-8")
             temporary_path.replace(self.path)
-        except OSError as exc:
+        except (OSError, TypeError, ValueError) as exc:
             raise StorageError(f"Không thể lưu dữ liệu: {exc}") from exc
