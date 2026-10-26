@@ -15,9 +15,9 @@ Không thuộc phạm vi: giao diện đồ họa/web, đăng nhập và phân q
 5. Xem lịch sử giao dịch theo tài khoản.
 6. Lưu và tải tài khoản/giao dịch từ JSON.
 
-## Setup
+## Yêu cầu và setup
 
-Yêu cầu Python 3.12 trở lên. Tạo môi trường ảo nếu muốn, sau đó cài pytest để chạy test:
+Yêu cầu Python **3.10 trở lên**. Tạo môi trường ảo nếu muốn, sau đó cài pytest để chạy test:
 
 ```bash
 python -m venv .venv
@@ -40,19 +40,28 @@ Dữ liệu được tạo ở `data/bank_data.json` sau giao dịch lưu đầu
 
 ## Test
 
+Cài pytest một lần bằng `python -m pip install pytest`.
+
+Khi terminal đang ở thư mục `projects/bank-management-capstone`:
+
 ```bash
 python -m pytest -q tests
 ```
 
-Chạy lệnh trên khi terminal đang ở thư mục `projects/bank-management-capstone`. Từ root repository, dùng `python -m pytest -q projects/bank-management-capstone/tests` để chỉ chạy bộ test này.
+Hoặc từ **root repository**:
 
-Bộ test bao gồm tạo tài khoản, nạp tiền, rút vượt số dư, số tiền bằng 0/âm, chuyển tiền, tài khoản không tồn tại, file chưa có, JSON hợp lệ và dữ liệu JSON hỏng/sai cấu trúc.
+```bash
+python -m pytest -q projects/bank-management-capstone/tests
+```
+
+Bộ test kiểm tra tạo tài khoản, nạp tiền, rút vượt số dư, số tiền bằng 0/âm, chuyển tiền, tài khoản không tồn tại, file chưa có, lưu/đọc JSON, JSON sai định dạng, dữ liệu tài khoản/giao dịch không đầy đủ, giao dịch tham chiếu tài khoản không tồn tại và file không phải UTF-8.
 
 ## Cấu trúc chính
 
 - `main.py`: menu CLI, nhập liệu và hiển thị thông báo.
-- `src/bank.py`: quy tắc nghiệp vụ và lịch sử giao dịch.
+- `src/bank.py`: quy tắc nghiệp vụ, kiểm tra dữ liệu và lịch sử giao dịch.
 - `src/storage.py`: đọc/ghi JSON, xử lý lỗi file.
+- `tests/conftest.py`: giúp import module test hoạt động khi chạy pytest từ thư mục project hoặc root repository.
 - `tests/test_bank.py`: kiểm thử nghiệp vụ và persistence.
 - `data/`: nơi lưu dữ liệu phát sinh.
 
@@ -61,25 +70,26 @@ Bộ test bao gồm tạo tài khoản, nạp tiền, rút vượt số dư, s�
 - Dùng `dict` để truy cập tài khoản theo mã và `list` để lưu lịch sử giao dịch.
 - Tách `BankService` khỏi `JsonBankStorage` để test nghiệp vụ mà không cần đọc/ghi file.
 - Số tiền biểu diễn bằng số nguyên VND, tránh sai số số thực trong phép tính tiền đơn giản.
+- Kiểm tra cấu trúc dữ liệu được nạp trước khi dùng để tránh lỗi `KeyError` hoặc lỗi kiểu dữ liệu ngoài dự kiến.
 - Lưu qua file tạm rồi thay thế file đích để giảm rủi ro dữ liệu bị ghi dở.
 
-## Evidence
+## Pre-submit readiness check
 
-- Test cục bộ trong lúc dựng project: **11 passed**.
-- Chạy readiness checker từ root repository:
+Từ root repository, chạy readiness checker của khóa học:
 
 ```bash
 python weeks/week-15-capstone-project/checks/check_capstone_readiness.py projects/bank-management-capstone
 ```
 
-- Kết quả chạy trực tiếp trên repository cần được xác nhận riêng trước khi nộp.
+Checker chỉ xác nhận một số bằng chứng cơ học như file tài liệu, số hàm, số test và khả năng collect test; **PASS không thay thế review theo rubric**. Trước khi nộp, hãy chạy lại toàn bộ test trên máy của bạn và thử trực tiếp các luồng chính.
 
 ## Known limitations
 
 - Đây là ứng dụng học tập, không phải hệ thống tài chính an toàn.
 - Chưa có xác thực người dùng, khóa file cho nhiều tiến trình, hoàn tác giao dịch hoặc cơ chế khôi phục từ bản sao lưu.
+- Nếu việc ghi file thất bại sau một thao tác nghiệp vụ, trạng thái trong bộ nhớ của lần chạy hiện tại có thể đã thay đổi dù dữ liệu chưa được lưu thành công; hãy thoát mà không tiếp tục thao tác và kiểm tra file dữ liệu.
 - ID được sinh theo dữ liệu hiện tại; không dùng làm mã định danh production.
 
 ## AI usage
 
-Xem file `AI_USAGE.md`. Người nộp cần đọc, chạy thử và giải thích được các quyết định trong mã nguồn trước khi bảo vệ.
+Xem file `AI_USAGE.md`. Người nộp cần cá nhân hóa phần mô tả đóng góp, tự đọc code, chạy test và giải thích được các quyết định trước khi bảo vệ.
