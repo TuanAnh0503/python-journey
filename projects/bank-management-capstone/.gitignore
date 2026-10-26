@@ -1,0 +1,4 @@
+data/bank_data.json
+data/bank_data.json.tmp
+__pycache__/
+.pytest_cache/
